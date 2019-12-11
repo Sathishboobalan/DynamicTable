@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/v4-shims.css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .edit-option{
+            cursor: pointer;
+        }
+        .table-header{
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body ng-controller='my-cntrl'>
+    <div class="container">
+        <div class="text-center">
+            <h3>User Details (updated)</h3>
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="updateStatus('new')" data-toggle="modal" data-target="#myModal">Add User</button>
+        <div class="table-bordered mt-4 table-header">
+            <div class="row mt-2 ml-2">
+                <div class="col-2">
+                    <h5>S.No</h5>
+                </div>
+                <div class="col-2">
+                    <h5>Name</h5>
+                </div>
+                <div class="col-2">
+                    <h5>Age</h5>
+                </div>
+                <div class="col-2">
+                    <h5>Gender</h5>
+                </div>
+                <div class="col-2">
+                    <h5>Native</h5>
+                </div>
+                <div class="col-2">
+                    <h5>Option</h5>
+                </div>
+            </div>
+        </div>
+        <div class="table-bordered" ng-repeat="x in users">
+            <div class="row mt-2 ml-2"  >
+                    <div class="col-2">
+                        <h5>{{  $index + 1  }}</h5>
+                    </div>
+                    <div class="col-2">
+                        <h5>{{ x.name }}</h5>
+                    </div>
+                    <div class="col-2">
+                        <h5>{{ x.age }}</h5>
+                    </div>
+                    <div class="col-2">
+                        <h5>{{ x.gen }}</h5>
+                    </div>
+                    <div class="col-2">
+                        <h5>{{ x.nat }}</h5>
+                    </div>
+                    <div class="col-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <div><i class="fas fa-edit edit-option"  data-ng-click="getIndex(x,$index,'update')" data-toggle="modal" data-target="#myModal"> edit</i></div>
+                            </div>
+                            <div class="col-6">
+                                <div><i class="fa fa-trash edit-option" ng-click="deleteData(x,$index)"> Delete</i></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!-- MODAL -->
+    <div class="modal modal-center fade" id="myModal">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+              <div class="modal-content">
+              
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <div ng-switch=" currentStatus ">
+                        <div ng-switch-when="new">
+                            <h4 class="modal-title">Add Details of Person</h4>
+                        </div>
+                        <div ng-switch-when="update">
+                                <h4 class="modal-title">Update Details of Person</h4>
+                        </div>
+                    </div>
+                 
+                  <button type="button" class="close" data-dismiss="modal" ng-click="initFunc()">&times;</button>
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-2">
+                            <h5 class="mt-4">Name</h5>
+                            <h5 class="mt-4">Age</h5>
+                            <h5 class="mt-4">Gender</h5>
+                            <h5 class="mt-4">Native</h5>
+                        </div>
+                        <div class="col-10">
+                            <input type="text" class="form-control mt-3" ng-model="name" placeholder="Enter Name" />    
+                            <input type="text" class="form-control mt-3" ng-model="age" placeholder="Enter Age" />    
+                            <select class="form-control mt-3" ng-model="gen" ng-options="x for x in gender"></select>  
+                            <select class="form-control mt-3" ng-model="nat" ng-options="x for x in country"></select>     
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <div ng-switch=" currentStatus ">
+                        <div ng-switch-when="new">
+                            <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addUsers()">Save</button>
+                        </div>
+                        <div ng-switch-when="update">
+                            <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="updateUsers()">Update</button>
+                        </div>
+                    </div>
+                    
+                  <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="initFunc()">Cancel</button>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+    <script src="script.js"></script>
+</body>
+</html>
